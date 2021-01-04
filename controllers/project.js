@@ -1,5 +1,6 @@
 var Project = require('../models/project')
 var fs = require('fs')
+var path = require('path')
 var controller = {
     save : function(req,res){
         var project = new Project()
@@ -10,7 +11,6 @@ var controller = {
         project.langs = args.langs
         project.image = null
         args.langs.split(',').forEach(lang => {
-            console.log(lang)
         });
         project.save((err,result) => {
             if(err){
@@ -122,6 +122,19 @@ var controller = {
         }else{
             return res.status(404).send({error:true,type:404})
         }
+    },
+    getImageFile: function(req,res){
+        var file = req.params.file
+        var path_file = "./uploads/" + file
+        fs.exists(path_file,(exist) => {
+            if(exist){
+                return res.sendFile(path.resolve(path_file))
+            }else{
+                return res.status(404).send(
+                    {error:true, type:404,message:'Imagen inexistente'}
+                )
+            }
+        })
     }
 }
 module.exports = controller

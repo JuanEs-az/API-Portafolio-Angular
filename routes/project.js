@@ -15,5 +15,6 @@ router.get('/project',projectController.getAll)
 router.put('/project/:id/update',projectController.update)
 router.delete('/project/:id/delete',projectController.delete)
 router.post('/project/:id/uploadImage',middlewares.uploadFiles,projectController.uploadImage)
+router.get('/getImage/:file',projectController.getImageFile)
 //Exportamos
 module.exports = router
